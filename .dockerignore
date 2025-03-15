@@ -1,0 +1,9 @@
+README.md
+LICENSE
+.vscode
+.git
+.gitignore
+.dockerignore
+docker-compose.yml
+Dockerfile
+*/__pycache__
