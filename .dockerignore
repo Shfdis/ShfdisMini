@@ -7,3 +7,4 @@ LICENSE
 docker-compose.yml
 Dockerfile
 */__pycache__
+.github
