@@ -1,9 +1,0 @@
-services:
-  api-gateway-login:
-    container_name: api-gateway-login
-    build:
-      context: ./api-gateway-login
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
