@@ -20,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\LoginHandler\LoginHandler.csproj" />
       <ProjectReference Include="..\LoginManager\LoginManager.csproj" />
+      <ProjectReference Include="..\SessionHandler\SessionHandler.csproj" />
     </ItemGroup>
 
 </Project>

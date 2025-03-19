@@ -6,7 +6,7 @@ namespace SessionHandler;
 
 public sealed class SessionManager : IDisposable, IAsyncDisposable
 {
-    private SessionContext? _sessionContext = null;
+    private readonly SessionContext _sessionContext;
     public SessionManager()
     {
         try
@@ -27,8 +27,8 @@ public sealed class SessionManager : IDisposable, IAsyncDisposable
             if (passwordHashing.VerifyPassword(password))
             {
                 Session session = new Session { UserId = userId };
-                _sessionContext?.Sessions.Add(session);
-                _sessionContext?.SaveChanges();
+                _sessionContext.Sessions.Add(session);
+                _sessionContext.SaveChanges();
                 return session;
             }
             else
@@ -41,7 +41,32 @@ public sealed class SessionManager : IDisposable, IAsyncDisposable
             throw new DataException("Could not create user Session.");
         }
     }
-    
+
+    public bool IsActive(string token)
+    {
+        IEnumerable<Session> sessions = from p 
+            in _sessionContext.Sessions
+            where p.SessionToken == token
+                select p;
+        return sessions.Any();
+    }
+
+    public void EndSession(string sessionToken)
+    {
+        try
+        {
+            ISession session =
+                (from p in _sessionContext.Sessions 
+                    where p.SessionToken == sessionToken
+                    select p).Single();
+            _sessionContext.Remove(session);
+            _sessionContext.SaveChanges();
+        }
+        catch
+        {
+            throw new DataException("Session is inactive.");
+        }
+    }
     public void Dispose()
     {
         _sessionContext?.Dispose();
@@ -49,9 +74,6 @@ public sealed class SessionManager : IDisposable, IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (_sessionContext != null)
-        {
-            await _sessionContext.DisposeAsync();
-        }
+        await _sessionContext.DisposeAsync();
     }
 }

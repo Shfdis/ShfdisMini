@@ -1,6 +1,6 @@
-namespace TestLoginHandler;
+namespace TestLoginManager;
 using LoginHandler;
-public class Tests
+public class TestsForLogin
 {
     [SetUp]
     public void Setup()

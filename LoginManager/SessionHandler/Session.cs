@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 namespace SessionHandler;
 [PrimaryKey(nameof(Id))]
@@ -14,16 +16,18 @@ internal sealed class Session : ISession
         {
             rng.GetBytes(uintBuffer);
             uint num = BitConverter.ToUInt32(uintBuffer, 0);
-            res.Append(valid[(int)(num % (uint)valid.Length)]);
+            res += valid[(int)(num % (uint)valid.Length)];
         }
-
         return res;
     }
-    internal string Id { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
+    internal int Id { get; set; }
+    [Key]
     public string UserId { get; set; }
-    private string SessionToken { get; set; } = RandomString(50);
-    public bool IsAuthentified(string token)
-    {
-        return SessionToken == token;
-    }
+    [Key]
+    public string SessionToken { get; set; } = RandomString(50);
+    
+    [Column(TypeName="Date")]
+    public DateTime CreatedDate { get; } = DateTime.Now;
 }
