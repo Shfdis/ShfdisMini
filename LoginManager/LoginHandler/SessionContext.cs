@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 internal sealed class SessionContext : DbContext
 {
+    internal SessionContext()
+    {
+        Database.EnsureCreated();
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite("Data Source=loginManager.db");
