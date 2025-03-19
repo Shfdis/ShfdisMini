@@ -1,0 +1,13 @@
+/home/artem/ShfdisMini/LoginManager/LoginHandler/bin/Debug/net8.0/LoginHandler.deps.json
+/home/artem/ShfdisMini/LoginManager/LoginHandler/bin/Debug/net8.0/LoginHandler.dll
+/home/artem/ShfdisMini/LoginManager/LoginHandler/bin/Debug/net8.0/LoginHandler.pdb
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.csproj.AssemblyReference.cache
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.GeneratedMSBuildEditorConfig.editorconfig
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.AssemblyInfoInputs.cache
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.AssemblyInfo.cs
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.csproj.CoreCompileInputs.cache
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.sourcelink.json
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.dll
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/refint/LoginHandler.dll
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/LoginHandler.pdb
+/home/artem/ShfdisMini/LoginManager/LoginHandler/obj/Debug/net8.0/ref/LoginHandler.dll

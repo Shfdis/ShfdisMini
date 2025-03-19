@@ -1,0 +1,15 @@
+/home/artem/ShfdisMini/LoginManager/LoginManager/bin/Debug/net8.0/LoginManager
+/home/artem/ShfdisMini/LoginManager/LoginManager/bin/Debug/net8.0/LoginManager.deps.json
+/home/artem/ShfdisMini/LoginManager/LoginManager/bin/Debug/net8.0/LoginManager.runtimeconfig.json
+/home/artem/ShfdisMini/LoginManager/LoginManager/bin/Debug/net8.0/LoginManager.dll
+/home/artem/ShfdisMini/LoginManager/LoginManager/bin/Debug/net8.0/LoginManager.pdb
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.GeneratedMSBuildEditorConfig.editorconfig
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.AssemblyInfoInputs.cache
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.AssemblyInfo.cs
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.csproj.CoreCompileInputs.cache
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.sourcelink.json
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.dll
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/refint/LoginManager.dll
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.pdb
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/LoginManager.genruntimeconfig.cache
+/home/artem/ShfdisMini/LoginManager/LoginManager/obj/Debug/net8.0/ref/LoginManager.dll

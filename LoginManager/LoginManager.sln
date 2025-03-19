@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManager", "LoginManager\LoginManager.csproj", "{3CDE2A4D-7A2B-46EF-9A40-B6E64B30687C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginHandler", "LoginHandler\LoginHandler.csproj", "{05693409-F6C3-4FE6-B7A6-BFD08B75EE3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLoginManager", "TestLoginManager\TestLoginManager.csproj", "{BF205367-FCA1-403C-851B-67DF41891FE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CDE2A4D-7A2B-46EF-9A40-B6E64B30687C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CDE2A4D-7A2B-46EF-9A40-B6E64B30687C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CDE2A4D-7A2B-46EF-9A40-B6E64B30687C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CDE2A4D-7A2B-46EF-9A40-B6E64B30687C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05693409-F6C3-4FE6-B7A6-BFD08B75EE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05693409-F6C3-4FE6-B7A6-BFD08B75EE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05693409-F6C3-4FE6-B7A6-BFD08B75EE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05693409-F6C3-4FE6-B7A6-BFD08B75EE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF205367-FCA1-403C-851B-67DF41891FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF205367-FCA1-403C-851B-67DF41891FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF205367-FCA1-403C-851B-67DF41891FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF205367-FCA1-403C-851B-67DF41891FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
