@@ -1,4 +1,4 @@
-namespace TestLoginManager;
+namespace TestLoginHandler;
 using LoginHandler;
 public class Tests
 {
