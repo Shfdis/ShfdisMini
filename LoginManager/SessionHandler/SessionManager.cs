@@ -4,37 +4,28 @@ using LoginHandler;
 
 namespace SessionHandler;
 
-public sealed class SessionManager : IDisposable, IAsyncDisposable
+internal sealed class SessionManager : SessionContext, ISessionManager
 {
-    private readonly SessionContext _sessionContext;
-    public SessionManager()
-    {
-        try
-        {
-            _sessionContext = new SessionContext();
-        }
-        catch (Exception)
-        {
-            throw new DataException("Could not create Session Context.");
-        }
-    }
+    
     public ISession CreateUserSession(string userId, string password)
     {
         try
         {
-            using LoginHandler.LoginHandler handler = new LoginHandler.LoginHandler();
-            IPasswordHashing passwordHashing = handler.GetLoginChecker(userId);
+            using ILoginManager manager = LoginManagerFactory.CreateLoginManager();
+            IPasswordHashing passwordHashing = manager.GetLoginChecker(userId);
             if (passwordHashing.VerifyPassword(password))
             {
                 Session session = new Session { UserId = userId };
-                _sessionContext.Sessions.Add(session);
-                _sessionContext.SaveChanges();
+                Sessions.Add(session);
+                SaveChanges();
                 return session;
             }
-            else
-            {
-                throw new AuthenticationException("Invalid password.");
-            }
+
+            throw new AuthenticationException("Invalid password.");
+        }
+        catch (AuthenticationException e)
+        {
+            throw e;
         }
         catch (Exception)
         {
@@ -45,7 +36,7 @@ public sealed class SessionManager : IDisposable, IAsyncDisposable
     public bool IsActive(string token)
     {
         IEnumerable<Session> sessions = from p 
-            in _sessionContext.Sessions
+            in Sessions
             where p.SessionToken == token
                 select p;
         return sessions.Any();
@@ -56,24 +47,15 @@ public sealed class SessionManager : IDisposable, IAsyncDisposable
         try
         {
             ISession session =
-                (from p in _sessionContext.Sessions 
+                (from p in Sessions 
                     where p.SessionToken == sessionToken
                     select p).Single();
-            _sessionContext.Remove(session);
-            _sessionContext.SaveChanges();
+            Remove(session);
+            SaveChanges();
         }
         catch
         {
             throw new DataException("Session is inactive.");
         }
-    }
-    public void Dispose()
-    {
-        _sessionContext?.Dispose();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _sessionContext.DisposeAsync();
     }
 }

@@ -2,16 +2,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LoginHandler;
 
-public class LoginHandler : IDisposable, IAsyncDisposable
+internal class LoginManager : SessionContext, ILoginManager
 {
-    private readonly SessionContext? _sessionContext = new();
 
     public IPasswordHashing GetLoginChecker(string userId)
     {
         try
         {
             IEnumerable<PasswordHashing> hashings = from passwordHasing
-                    in _sessionContext.PasswordHashings
+                    in PasswordHashings
                     where passwordHasing.UserId == userId
                     select passwordHasing;
             return hashings.Single();
@@ -24,8 +23,8 @@ public class LoginHandler : IDisposable, IAsyncDisposable
     
     public void AddUser(string userId, string password)
     {
-        _sessionContext.PasswordHashings.Add(new PasswordHashing(userId, password));
-        _sessionContext.SaveChanges();
+        PasswordHashings.Add(new PasswordHashing(userId, password));
+        SaveChanges();
     }
 
     public void RemoveUser(string userId, string password)
@@ -34,19 +33,7 @@ public class LoginHandler : IDisposable, IAsyncDisposable
         {
             throw new ValidationException("Unauthorized user");
         }
-        _sessionContext.Remove(_sessionContext.PasswordHashings.Single(h => h.UserId == userId));
-        _sessionContext.SaveChanges();
-    }
-    public void Dispose()
-    {
-        _sessionContext.Dispose();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_sessionContext != null)
-        {
-            await _sessionContext.DisposeAsync();
-        }
+        Remove(PasswordHashings.Single(h => h.UserId == userId));
+        SaveChanges();
     }
 }

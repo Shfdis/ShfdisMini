@@ -13,13 +13,13 @@ public class TestsForSession
     [Category("Session creation/deletion")]
     public void Test1()
     {
-        using (LoginHandler loginHandler = new LoginHandler())
+        using (ILoginManager loginManager = LoginManagerFactory.CreateLoginManager())
         {
-            loginHandler.AddUser("shfdis", "5456");
-            loginHandler.AddUser("yunetive", "alan");
+            loginManager.AddUser("shfdis", "5456");
+            loginManager.AddUser("yunetive", "alan");
         }
         string shfdisToken, yunetiveToken;
-        using (SessionManager sessionHandler = new())
+        using (ISessionManager sessionHandler = SessionManagerFactory.CreateSession())
         {
             ISession shfdisSession = sessionHandler.CreateUserSession("shfdis", "5456");
             Assert.True(sessionHandler.IsActive(shfdisSession.SessionToken));
@@ -29,16 +29,16 @@ public class TestsForSession
             yunetiveToken = yunetiveSession.SessionToken;
         }
 
-        using (SessionManager sessionManager = new())
+        using (ISessionManager sessionManager = SessionManagerFactory.CreateSession())
         {
             sessionManager.EndSession(shfdisToken);
             sessionManager.EndSession(yunetiveToken);
         }
 
-        using (LoginHandler loginHandler = new())
+        using (ILoginManager loginManager = LoginManagerFactory.CreateLoginManager())
         {
-            loginHandler.RemoveUser("shfdis", "5456");
-            loginHandler.RemoveUser("yunetive", "alan");
+            loginManager.RemoveUser("shfdis", "5456");
+            loginManager.RemoveUser("yunetive", "alan");
         }
     }
    

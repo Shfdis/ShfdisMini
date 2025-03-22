@@ -12,14 +12,14 @@ public class TestsForLogin
     [Category("Add/Remove user")]
     public void Test1()
     {
-        using (LoginHandler loginHandler = new LoginHandler())
+        using (ILoginManager loginManager =  LoginManagerFactory.CreateLoginManager())
         {
-            loginHandler.AddUser("shfdis", "5456");
+            loginManager.AddUser("shfdis", "5456");
         }
 
-        using (LoginHandler loginHandler = new LoginHandler())
+        using (ILoginManager loginManager = LoginManagerFactory.CreateLoginManager())
         {
-            loginHandler.RemoveUser("shfdis", "5456");
+            loginManager.RemoveUser("shfdis", "5456");
         }
         
     }
@@ -27,14 +27,14 @@ public class TestsForLogin
     [Category("Login")]
     public void Test2()
     {
-        using LoginHandler loginHandler = new LoginHandler();
-        loginHandler.AddUser("shfdis", "5456");
-        IPasswordHashing checker = loginHandler.GetLoginChecker("shfdis");
+        using ILoginManager loginManager = LoginManagerFactory.CreateLoginManager();
+        loginManager.AddUser("shfdis", "5456");
+        IPasswordHashing checker = loginManager.GetLoginChecker("shfdis");
         
         Assert.True(checker.VerifyPassword("5456"));
         Assert.False(checker.VerifyPassword("5454"));
         Assert.False(checker.VerifyPassword("546"));
         
-        loginHandler.RemoveUser("shfdis", "5456");
+        loginManager.RemoveUser("shfdis", "5456");
     }
 }
