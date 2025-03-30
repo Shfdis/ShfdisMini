@@ -1,3 +1,0 @@
-/home/artem/ShfdisMini/WebAPIGateway/CMakeFiles/WebAPIGateway.dir
-/home/artem/ShfdisMini/WebAPIGateway/CMakeFiles/edit_cache.dir
-/home/artem/ShfdisMini/WebAPIGateway/CMakeFiles/rebuild_cache.dir
