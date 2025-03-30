@@ -1,0 +1,9 @@
+FROM drogonframework/drogon:latest
+
+COPY . /app
+WORKDIR /app
+RUN cmake .
+RUN cmake --build .
+
+EXPOSE 3000
+CMD ["./WebAPIGateway"]
