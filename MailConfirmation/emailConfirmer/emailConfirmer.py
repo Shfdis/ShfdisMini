@@ -5,8 +5,8 @@ import flask
 from flask import abort, jsonify, request
 import sender
 from db.db_session import create_session
-
 from db.MailsConfimed import MailsConfimed
+
 blueprint = flask.Blueprint(
     "email_confirmer",
     __name__,

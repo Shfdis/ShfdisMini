@@ -4,9 +4,9 @@ from flask import Flask
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_restful import Api
-
+import os
 import db.db_session
-import emailConfirmer.emailConfirmer
+from emailConfirmer.emailConfirmer import blueprint as emailConfirmer
 
 app = Flask(__name__)
 CORS(app)
@@ -28,9 +28,9 @@ def index_map():
 
 
 def deploy():
-    db.db_session.global_init(db_user='postgresql', db_password='postgresql', db_host='db',
-                                       db_port='5432', db_name='shfdismini')
+    db.db_session.global_init(db_user=os.environ["DB_USER"], db_password=os.environ["DB_PASSWORD"], db_host=os.environ["DB_HOST"], db_name='shfdismini')
     app.register_blueprint(emailConfirmer)
+
 
 
 deploy()
