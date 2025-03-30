@@ -21,6 +21,12 @@ public class SessionContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=../../../../loginManager.db");
+        
+        optionsBuilder.UseNpgsql($"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
+                                 $"Port=5433;" +
+                                 $"Database=shfdismini;" +
+                                 $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                                 $"Password={Environment.GetEnvironmentVariable("DB")}");
+        optionsBuilder.LogTo(System.Console.WriteLine);
     }
 }
