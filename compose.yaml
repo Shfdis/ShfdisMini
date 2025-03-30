@@ -9,7 +9,7 @@ services:
     
     container_name: mailconfirmation
     environment:
-      MAIL_PASSWORD: Y4jvXLfry9BHrzRnNLAX
+      MAIL_PASSWORD: 
     build:
       context: ./MailConfirmation
       dockerfile: ./MailConfirmation/Dockerfile
