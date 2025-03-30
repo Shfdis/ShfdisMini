@@ -1,8 +1,35 @@
-version: "3.9"
 services:
-  login-manager:
+  loginmanager:
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: db
+    depends_on:
+      - db
     build:
-      context: .
+      context: ./LoginManager
       dockerfile: ./LoginManagerAPI/Dockerfile
-    ports:
-      - "8080:8080"
+    container_name: loginmanager
+  mailconfirmation:
+    container_name: mailconfirmation
+    depends_on:
+      - db
+    environment:
+      MAIL_PASSWORD: 
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: db
+    build:
+      context: ./MailConfirmation
+      dockerfile: ./Dockerfile
+      
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: shfdismini
+volumes:
+  pgdata:
