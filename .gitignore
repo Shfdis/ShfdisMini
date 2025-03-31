@@ -1,0 +1,16 @@
+*.idea
+*cmake-build-debug
+*/CMakeFiles
+*/CMakeCache.txt
+*/cmake_install.cmake
+*/Makefile
+*/*.so
+*/*.dylib
+*/*.dll
+*/*.a
+*/*.lib
+*/*.exe
+*/*.o
+*/*.obj
+*/*.out
+./vscode

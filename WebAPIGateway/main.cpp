@@ -1,17 +1,21 @@
-#include <drogon/HttpAppFramework.h>
 #include <drogon/drogon.h>
+#include <memory>
+#include "APIGateway/ApiGatewayController.h"
+using namespace std;
 using namespace drogon;
-int main() {
-    app().loadConfigFile("./config.json");
-    using Callback = std::function<void (const HttpResponsePtr &)> ;
 
-    app().registerHandler("/", [](const HttpRequestPtr& req, Callback &&callback)
-    {
-        auto resp = HttpResponse::newHttpResponse();
-        resp->setBody("Hello World");
-        callback(resp);
-    });
+int main() {
+    const auto port(8080);
+
+    app()
+        .setLogPath("./")
+        .setLogLevel(trantor::Logger::kDebug)
+        .addListener("0.0.0.0", port)
+        .setThreadNum(16);
+
+    auto controller(make_shared<ApiGatewayController>());
+    app().registerController(controller);
     app().run();
-    
+
     return 0;
 }

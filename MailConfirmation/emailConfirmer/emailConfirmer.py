@@ -28,7 +28,7 @@ def mail():
             sender.sender.send_email_smtp(request.json['email'], mail.confirmation_code)
             session.commit()
         except Exception as e:
-            return {"status": "error", "message": str(e)}
+            return {"status": "error", "message": "Could not send email"}
         return {"status": "ok"}
 
 @blueprint.route('/mail/confirm', methods=['PUT'])
@@ -38,12 +38,14 @@ def confirm():
             mail = session.query(MailsConfimed).filter(MailsConfimed.email == request.json['email']).first()
             if not mail:
                 return {"status": "ok", "message": "Email not found"}
-            if mail.confirmed:
+            elif mail.confirmed:
                 return {"status": "ok", "message": "Email already confirmed"}
-            if mail.confirmation_code != request.json['confirmation_code']:
+            elif mail.confirmation_code != request.json['confirmation_code']:
                 return {"status": "ok", "message": "Confirmation code is not valid"}
-            session.commit()
-            return {"status": "ok", "message": "Email confirmed"}
+            else:
+                mail.confirmed = True
+                session.commit()
+                return {"status": "ok", "message": "Email confirmed"}
         except Exception as e:
             return {"status": "error", "message": str(e)}
     
