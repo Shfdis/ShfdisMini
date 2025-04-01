@@ -1,9 +1,9 @@
 import json
 import logging
-
+import uuid
 import flask
 from flask import abort, jsonify, request
-import sender
+import sender.sender
 from db.db_session import create_session
 from db.MailsConfimed import MailsConfimed
 
@@ -23,11 +23,12 @@ logger = logging.getLogger(__name__)
 def mail():
     with create_session() as session:
         try:
-            mail = MailsConfimed(request.json['email'], False)
+            mail = MailsConfimed(email=request.json['email'], confirmed=False, confirmation_code=str(uuid.uuid4()))
             session.add(mail)
             sender.sender.send_email_smtp(request.json['email'], mail.confirmation_code)
             session.commit()
         except Exception as e:
+            print(e.message)
             return {"status": "error", "message": "Could not send email"}
         return {"status": "ok"}
 
