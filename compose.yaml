@@ -41,6 +41,6 @@ services:
       - LOGINMANAGER_HOST=http://loginmanager
     build:
       context: ./WebAPIGateway
-      dockerfile: ./docerfile
+      dockerfile: ./dockerfile
 volumes:
   pgdata:
