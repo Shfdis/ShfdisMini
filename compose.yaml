@@ -31,5 +31,16 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: shfdismini
+  apigateway:
+    container_name: apigateway
+    depends_on:
+      - loginmanager
+      - mailconfirmation
+    environment:
+      - MAIL_CONFIRMATION_HOST=http://mailconfirmation
+      - LOGINMANAGER_HOST=http://loginmanager
+    build:
+      context: ./WebAPIGateway
+      dockerfile: ./docerfile
 volumes:
   pgdata:
