@@ -22,8 +22,6 @@ services:
     build:
       context: ./MailConfirmation
       dockerfile: ./Dockerfile
-    ports:
-      - "3000:3000"
       
   db:
     container_name: db
@@ -39,8 +37,8 @@ services:
       - loginmanager
       - mailconfirmation
     environment:
-      - MAIL_CONFIRMATION_HOST=http://mailconfirmation
-      - LOGINMANAGER_HOST=http://loginmanager
+        MAIL_CONFIRMATION_HOST: http://mailconfirmation:8081
+        LOGINMANAGER_HOST: http://loginmanager
     build:
       context: ./WebAPIGateway
       dockerfile: ./dockerfile

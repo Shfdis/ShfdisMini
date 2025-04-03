@@ -5,7 +5,7 @@ import flask
 from flask import abort, jsonify, request
 import sender.sender
 from db.db_session import create_session
-from db.MailsConfimed import MailsConfimed
+from db.MailsConfirmed import MailsConfirmed
 
 blueprint = flask.Blueprint(
     "email_confirmer",
@@ -23,20 +23,21 @@ logger = logging.getLogger(__name__)
 def mail():
     with create_session() as session:
         try:
-            mail = MailsConfimed(email=request.json['email'], confirmed=False, confirmation_code=str(uuid.uuid4()))
+            mail = MailsConfirmed(email=request.json['email'], confirmed=False, confirmation_code=str(uuid.uuid4()))
             session.add(mail)
-            sender.sender.send_email_smtp(request.json['email'], mail.confirmation_code)
+            value = sender.sender.send_email_smtp(request.json['email'], mail.confirmation_code)
             session.commit()
+            return {"status": "ok", "info": value}
         except Exception as e:
-            print(e.message)
+            logger.error(str(e))
             return {"status": "error", "message": "Could not send email"}
-        return {"status": "ok"}
+        
 
 @blueprint.route('/mail/confirm', methods=['PUT'])
 def confirm():
     with create_session() as session:
         try:
-            mail = session.query(MailsConfimed).filter(MailsConfimed.email == request.json['email']).first()
+            mail = session.query(MailsConfirmed).filter(MailsConfirmed.email == request.json['email']).first()
             if not mail:
                 return {"status": "ok", "message": "Email not found"}
             elif mail.confirmed:
