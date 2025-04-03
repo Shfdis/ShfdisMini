@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 namespace SessionHandler;
-[PrimaryKey(nameof(Id))]
+[PrimaryKey("id")]
 internal sealed class Session : ISession
 {
     static string RandomString(int length)
@@ -21,13 +21,13 @@ internal sealed class Session : ISession
         return res;
     }
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Key]
+    [Column("id")]
     internal int Id { get; set; }
-    [Key]
+    [Column("user_id")]
     public string UserId { get; set; }
-    [Key]
+    [Column("session_token")]
     public string SessionToken { get; set; } = RandomString(50);
     
-    [Column(TypeName="Date")]
+    [Column("date", TypeName="Date")]
     public DateTime CreatedDate { get; } = DateTime.Now;
 }

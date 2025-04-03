@@ -36,4 +36,9 @@ internal class LoginManager : SessionContext, ILoginManager
         Remove(PasswordHashings.Single(h => h.UserId == userId));
         SaveChanges();
     }
+
+    public bool Any(string userId)
+    {
+        return (from p in PasswordHashings select p.UserId == userId).Any();
+    }
 }

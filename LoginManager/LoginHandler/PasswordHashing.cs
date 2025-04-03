@@ -1,15 +1,19 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoginHandler;
-[PrimaryKey(nameof(UserId))]
+[PrimaryKey("user_id")]
+[Table("password_hashings")]
 internal class PasswordHashing : IPasswordHashing
 {
     public PasswordHashing()
     {
         // pass
     }
+    [Column("user_id")]
     public string UserId { get; set; }
+    [Column("password_hash")]
     public string PasswordHash { get; set; }
 
     public PasswordHashing(string userId, string password)

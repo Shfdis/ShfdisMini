@@ -1,6 +1,9 @@
 namespace MailConfirmation;
 
-public class MailManagerFactory
+public static class MailManagerFactory
 {
-    
+    public static IMailManager CreateMailManager()
+    {
+        return new MailManager();
+    }
 }

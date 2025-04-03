@@ -1,7 +1,8 @@
 using LoginHandler;
+using LoginManagerAPI;
 using SessionHandler;
+using MailConfirmation;
 using ISession = SessionHandler.ISession;
-
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,13 +20,39 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.MapGet("/", () => new {status = "success"});
-app.MapPost("/signup/{userId}/{password}", () => new { status = "not implemented" }).WithName("signup");
-app.MapDelete("/delete/{userId}/{password}", object (string userId, string password) => {
+app.MapPost("/signup", object (User user) =>
+{
+    using (ILoginManager mgr = LoginManagerFactory.CreateLoginManager())
+    {
+        using (IMailManager mailMgr = MailManagerFactory.CreateMailManager())
+        {
+            if (!mailMgr.IsConfirmed(user.UserId))
+            {
+                return new { status = "error", message = "mail is not confirmed" };
+            }
+        }
+        if (mgr.Any(user.UserId))
+        {
+            return new { status = "error", message = "Account with this email already exists" };
+        }
+
+        try
+        {
+            mgr.AddUser(user.UserId, user.Password);
+        }
+        catch (Exception ex)
+        {
+            return new { status = "error", message = ex.Message };
+        }
+    }
+    return new { status = "success" };
+}).WithName("signup");
+app.MapDelete("/delete", object (User user) => {
     try
     {
         using (ILoginManager mgr = LoginManagerFactory.CreateLoginManager())
         {
-            mgr.RemoveUser(userId, password);
+            mgr.RemoveUser(user.UserId, user.Password);
         }
         return new { status = "success" };
     }
@@ -37,13 +64,13 @@ app.MapDelete("/delete/{userId}/{password}", object (string userId, string passw
 
 
 app.MapGroup("/session");
-app.MapPost("/session/create/{userId}/{password}",
-    object(string userId, string password) =>
+app.MapPost("/session",
+    object(User user) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();
         try
         {
-            ISession answer = handler.CreateUserSession(userId, password);
+            ISession answer = handler.CreateUserSession(user.UserId, user.Password);
             return new {status = "success", token=answer.SessionToken};
         }
         catch (Exception ex)
@@ -56,7 +83,7 @@ app.MapGet("/session/{token}", (string token) =>
     using ISessionManager handler = SessionManagerFactory.CreateSession();
     return new {active = handler.IsActive(token), status = "success"};
 });
-app.MapDelete("/session/end/{token}",
+app.MapDelete("/session/{token}",
     (string token) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();

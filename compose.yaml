@@ -15,7 +15,7 @@ services:
     depends_on:
       - db
     environment:
-      MAIL_PASSWORD: 
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
       DB_USER: postgres
       DB_PASSWORD: postgres
       DB_HOST: db

@@ -3,8 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MailConfirmation;
 
-public class MailManager : SessionContext
+internal class MailManager : SessionContext, IMailManager
 {
     DbSet<MailConfirmation> MailConfirmations { get; set; }
+
+    public bool IsConfirmed(string email)
+    {
+        return MailConfirmations.Any(x => x.Email == email && x.Confirmed);
+    }
+    
     
 }
