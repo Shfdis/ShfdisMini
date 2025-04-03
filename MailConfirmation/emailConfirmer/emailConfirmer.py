@@ -30,7 +30,7 @@ def mail():
             return {"status": "ok", "info": value}
         except Exception as e:
             logger.error(str(e))
-            return {"status": "error", "message": "Could not send email"}
+            return {"status": "error", "message": "Could not send email"}, 
         
 
 @blueprint.route('/mail/confirm', methods=['PUT'])
