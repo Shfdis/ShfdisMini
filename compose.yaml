@@ -1,0 +1,48 @@
+services:
+  loginmanager:
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: db
+    depends_on:
+      - db
+    build:
+      context: ./LoginManager
+      dockerfile: ./LoginManagerAPI/Dockerfile
+    container_name: loginmanager
+  mailconfirmation:
+    container_name: mailconfirmation
+    depends_on:
+      - db
+    environment:
+      MAIL_PASSWORD: Y4jvXLfry9BHrzRnNLAX
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: db
+    build:
+      context: ./MailConfirmation
+      dockerfile: ./Dockerfile
+      
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: shfdismini
+  apigateway:
+    container_name: apigateway
+    depends_on:
+      - loginmanager
+      - mailconfirmation
+    environment:
+        MAIL_CONFIRMATION_HOST: http://mailconfirmation:8081
+        LOGINMANAGER_HOST: http://loginmanager
+    build:
+      context: ./WebAPIGateway
+      dockerfile: ./dockerfile
+    ports:
+      - "8080:8080"
+volumes:
+  pgdata:
