@@ -1,0 +1,1 @@
+/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/WebAPIGateway.dir/link.d CMakeFiles/WebAPIGateway.dir/main.cpp.o CMakeFiles/WebAPIGateway.dir/APIGateway/ApiGatewayController.cpp.o -o WebAPIGateway  /usr/lib/libdrogon.so.1.9.10 /usr/lib/libtrantor.so.1.5.23 /usr/lib/libjsoncpp.so
