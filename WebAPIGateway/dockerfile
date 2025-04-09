@@ -1,9 +1,0 @@
-FROM drogonframework/drogon:latest
-
-COPY . /app
-WORKDIR /app
-RUN cmake .
-RUN cmake --build .
-
-EXPOSE 8080
-CMD ["./WebAPIGateway"]

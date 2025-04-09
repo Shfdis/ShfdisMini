@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 def mail():
     with create_session() as session:
         try:
+            if session.query(MailsConfirmed).filter(MailsConfirmed.email == request.json['email']).first():
+                return {"status": "error", "message": "Email already exists"}
             mail = MailsConfirmed(email=request.json['email'], confirmed=False, confirmation_code=str(uuid.uuid4()))
             session.add(mail)
             value = sender.sender.send_email_smtp(request.json['email'], mail.confirmation_code)
