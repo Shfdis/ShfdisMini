@@ -17,3 +17,5 @@
 *.cmake
 *.log
 *Makefile
+SECRETS
+.env
