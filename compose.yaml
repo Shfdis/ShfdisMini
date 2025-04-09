@@ -1,5 +1,6 @@
 services:
   loginmanager:
+    container_name: loginmanager
     environment:
       DB_USER: postgres
       DB_PASSWORD: postgres
@@ -9,7 +10,7 @@ services:
     build:
       context: ./LoginManager
       dockerfile: ./LoginManagerAPI/Dockerfile
-    container_name: loginmanager
+    
   mailconfirmation:
     container_name: mailconfirmation
     depends_on:
@@ -38,7 +39,7 @@ services:
       - mailconfirmation
     environment:
         MAIL_CONFIRMATION_HOST: http://mailconfirmation:8081
-        LOGINMANAGER_HOST: http://loginmanager
+        LOGINMANAGER_HOST: http://loginmanager:8080
     build:
       context: ./WebAPIGateway
       dockerfile: ./dockerfile

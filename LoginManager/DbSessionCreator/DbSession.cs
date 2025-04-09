@@ -22,11 +22,12 @@ public class SessionContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         
-        optionsBuilder.UseNpgsql($"Host={Environment.GetEnvironmentVariable("DB_HOST")};" +
-                                 $"Port=5433;" +
-                                 $"Database=shfdismini;" +
-                                 $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
-                                 $"Password={Environment.GetEnvironmentVariable("DB")}");
+       optionsBuilder.UseNpgsql($"Host={Environment.GetEnvironmentVariable("DB_HOST")};" + 
+                                $"Port=5432;" +
+                                $"Database=shfdismini;" +
+                                $"Username={Environment.GetEnvironmentVariable("DB_USER")};" +
+                                $"Password={Environment.GetEnvironmentVariable("DB_PASSWORD")}");
+
         optionsBuilder.LogTo(System.Console.WriteLine);
     }
 }

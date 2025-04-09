@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 namespace SessionHandler;
-[PrimaryKey("id")]
+[PrimaryKey("Id")]
 internal sealed class Session : ISession
 {
     static string RandomString(int length)

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 namespace MailConfirmation;
-[PrimaryKey("email")]
+[PrimaryKey("Email")]
 [Table("mails_confirmed")]
 public class MailConfirmation
 {

@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 
 namespace LoginHandler;
-[PrimaryKey("user_id")]
+[PrimaryKey("UserId")]
 [Table("password_hashings")]
 internal class PasswordHashing : IPasswordHashing
 {

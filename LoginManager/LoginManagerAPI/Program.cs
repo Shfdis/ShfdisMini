@@ -1,3 +1,4 @@
+using System.Web.Http;
 using LoginHandler;
 using LoginManagerAPI;
 using SessionHandler;
@@ -20,7 +21,7 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.MapGet("/", () => new {status = "success"});
-app.MapPost("/signup", object (User user) =>
+app.MapPost("/signup", object ([Microsoft.AspNetCore.Mvc.FromBody]User user) =>
 {
     using (ILoginManager mgr = LoginManagerFactory.CreateLoginManager())
     {
@@ -47,7 +48,7 @@ app.MapPost("/signup", object (User user) =>
     }
     return new { status = "success" };
 }).WithName("signup");
-app.MapDelete("/delete", object (User user) => {
+app.MapDelete("/delete", object ([Microsoft.AspNetCore.Mvc.FromBody]User user) => {
     try
     {
         using (ILoginManager mgr = LoginManagerFactory.CreateLoginManager())
@@ -65,7 +66,7 @@ app.MapDelete("/delete", object (User user) => {
 
 app.MapGroup("/session");
 app.MapPost("/session",
-    object(User user) =>
+    object([Microsoft.AspNetCore.Mvc.FromBody]User user) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();
         try
@@ -78,13 +79,13 @@ app.MapPost("/session",
             return new {status = ex.Message};
         }
     }).WithName("CreateSession");
-app.MapGet("/session/{token}", (string token) =>
+app.MapGet("/session/{token}", ([FromUri]string token) =>
 {
     using ISessionManager handler = SessionManagerFactory.CreateSession();
     return new {active = handler.IsActive(token), status = "success"};
 });
 app.MapDelete("/session/{token}",
-    (string token) =>
+    ([FromUri]string token) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();
         try
