@@ -23,7 +23,6 @@ services:
     build:
       context: ./MailConfirmation
       dockerfile: ./Dockerfile
-      
   db:
     container_name: db
     image: postgres
@@ -32,18 +31,20 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: shfdismini
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   apigateway:
     container_name: apigateway
     depends_on:
       - loginmanager
       - mailconfirmation
-    environment:
-        MAIL_CONFIRMATION_HOST: http://mailconfirmation:8081
-        LOGINMANAGER_HOST: http://loginmanager:8080
     build:
       context: ./WebAPIGateway
       dockerfile: ./dockerfile
     ports:
       - "8080:8080"
+    environment:
+      MAIL_HOST: http://mailconfirmation:8080
+      LOGIN_HOST: http://loginmanager:8080
 volumes:
   pgdata:

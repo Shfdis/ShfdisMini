@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/artem/ShfdisMini/WebAPIGateway/build/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

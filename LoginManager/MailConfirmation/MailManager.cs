@@ -9,7 +9,7 @@ internal class MailManager : SessionContext, IMailManager
 
     public bool IsConfirmed(string email)
     {
-        return MailConfirmations.Any(x => x.Email == email && x.Confirmed);
+        return (from p in MailConfirmations where p.Email == email && p.Confirmed select p).Count() > 0;
     }
     
     
