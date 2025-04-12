@@ -27,19 +27,19 @@ app.MapPost("/signup", object ([Microsoft.AspNetCore.Mvc.FromBody]User user) =>
     {
         using (IMailManager mailMgr = MailManagerFactory.CreateMailManager())
         {
-            if (!mailMgr.IsConfirmed(user.UserId))
+            if (!mailMgr.IsConfirmed(user.email))
             {
                 return new { status = "error", message = "mail is not confirmed" };
             }
         }
-        if (mgr.Any(user.UserId))
+        if (mgr.Any(user.email))
         {
             return new { status = "error", message = "Account with this email already exists" };
         }
 
         try
         {
-            mgr.AddUser(user.UserId, user.Password);
+            mgr.AddUser(user.email, user.password);
         }
         catch (Exception ex)
         {
@@ -53,7 +53,7 @@ app.MapDelete("/delete", object ([Microsoft.AspNetCore.Mvc.FromBody]User user) =
     {
         using (ILoginManager mgr = LoginManagerFactory.CreateLoginManager())
         {
-            mgr.RemoveUser(user.UserId, user.Password);
+            mgr.RemoveUser(user.email, user.password);
         }
         return new { status = "success" };
     }
@@ -63,20 +63,18 @@ app.MapDelete("/delete", object ([Microsoft.AspNetCore.Mvc.FromBody]User user) =
     }
 }).WithName("delete user");
 
-
-app.MapGroup("/session");
 app.MapPost("/session",
-    object([Microsoft.AspNetCore.Mvc.FromBody]User user) =>
+    object ([FromBody] User user) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();
         try
         {
-            ISession answer = handler.CreateUserSession(user.UserId, user.Password);
-            return new {status = "success", token=answer.SessionToken};
+            ISession answer = handler.CreateUserSession(user.email, user.password);
+            return new { status = "success", token = answer.SessionToken };
         }
         catch (Exception ex)
         {
-            return new {status = ex.Message};
+            return new { status = ex.Message };
         }
     }).WithName("CreateSession");
 app.MapGet("/session/{token}", ([FromUri]string token) =>
@@ -85,7 +83,7 @@ app.MapGet("/session/{token}", ([FromUri]string token) =>
     return new {active = handler.IsActive(token), status = "success"};
 });
 app.MapDelete("/session/{token}",
-    ([FromUri]string token) =>
+    object ([FromUri]string token) =>
     {
         using ISessionManager handler = SessionManagerFactory.CreateSession();
         try

@@ -2,6 +2,6 @@ namespace LoginManagerAPI;
 
 public class User
 {
-    public string UserId { get; set; }
-    public string Password { get; set; }
+    public string email { get; set; }
+    public string password { get; set; }
 }
