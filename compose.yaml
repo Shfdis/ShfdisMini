@@ -41,10 +41,15 @@ services:
     build:
       context: ./WebAPIGateway
       dockerfile: ./dockerfile
-    ports:
-      - "8080:8080"
     environment:
       MAIL_HOST: http://mailconfirmation:8080
       LOGIN_HOST: http://loginmanager:8080
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: ./dockerfile
+    ports:
+      - "3000:80"
 volumes:
   pgdata:
